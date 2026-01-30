@@ -6,3 +6,7 @@
 .DS_Store
 loc.py
 src/ec2
+# Course: exported models
+models/
+*.npz
+DeineZahlen/

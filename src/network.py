@@ -129,6 +129,29 @@ class Network(object):
         test_results = [(np.argmax(self.feedforward(x)), y)
                         for (x, y) in test_data]
         return sum(int(x == y) for (x, y) in test_results)
+    
+    def def_predict(self, test_data):
+ 
+        mistakes = []
+
+        for x, y_true in test_data:
+            out = self.feedforward(x).reshape(-1)	# shape (10,)
+            y_pred = int(np.argmax(out))
+
+            if y_pred != y_true:
+                output_true = float(out[int(y_true)])
+                output_pred = float(out[y_pred])
+
+                mistakes.append({
+                    "true_label": int(y_true),
+                    "predicted_label": y_pred,
+                    "output_true": output_true,
+                    "output_pred": output_pred,
+                    "margin": output_pred - output_true
+                })
+
+        return mistakes
+
 
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives \partial C_x /
